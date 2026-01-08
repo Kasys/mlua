@@ -1661,9 +1661,9 @@ impl Lua {
     #[cfg_attr(docsrs, doc(cfg(feature = "async")))]
     pub async fn async_scope<'env, R>(
         &self,
-        f: impl for<'scope> async FnOnce(&'scope Scope<'scope, 'env>) -> Result<R>,
+        f: impl for<'scope> AsyncFnOnce(&'scope Scope<'scope, 'env>) -> Result<R>,
     ) -> Result<R> {
-        f(&Scope::new(self.lock_arc()))
+        f(&Scope::new(self.lock_arc())).await
     }
 
     /// Attempts to coerce a Lua value into a String in a manner consistent with Lua's internal
