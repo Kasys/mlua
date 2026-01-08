@@ -1656,7 +1656,7 @@ impl Lua {
     ///
     /// Refer to [`scope`] for more information about the implementation.
     ///
-    /// [`add_method`]: Lua::scope
+    /// [`scope`]: Lua::scope
     #[cfg(feature = "async")]
     #[cfg_attr(docsrs, doc(cfg(feature = "async")))]
     pub async fn async_scope<'env, R>(
