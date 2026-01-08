@@ -1651,6 +1651,21 @@ impl Lua {
         f(&Scope::new(self.lock_arc()))
     }
 
+    /// Calls the given async function with a [`Scope`] parameter, giving the function the ability
+    /// to creat userdata and callbacks from Rust types that are `!Send` or non-`'static`.
+    ///
+    /// Refer to [`scope`] for more information about the implementation.
+    ///
+    /// [`add_method`]: Lua::scope
+    #[cfg(feature = "async")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "async")))]
+    pub async fn async_scope<'env, R>(
+        &self,
+        f: impl for<'scope> async FnOnce(&'scope Scope<'scope, 'env>) -> Result<R>,
+    ) -> Result<R> {
+        f(&Scope::new(self.lock_arc()))
+    }
+
     /// Attempts to coerce a Lua value into a String in a manner consistent with Lua's internal
     /// behavior.
     ///
